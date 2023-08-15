@@ -1,35 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { robotService } from '../services/robotService'
+import React, { useEffect, useState } from "react";
+import { contactService } from "../services/contactService";
 
-export function RobotDetails({ robotId, onBack }) {
+export function ContactDetails({ contactId, onBack }) {
+  const [contact, setContact] = useState(null);
 
-    const [robot, setRobot] = useState(null)
+  useEffect(() => {
+    loadContact();
+  }, [])
 
+  async function loadContact() {
+    const contact = await contactService.getById(contactId);
+    setContact(contact);
+  }
 
-    useEffect(() => {
-        loadRobot()
-    }, [])
-
-
-    async function loadRobot() {
-        const robot = await robotService.getById(robotId)
-        setRobot(robot)
-    }
-
-    if (!robot) return <div>Loading...</div>
-    return (
-        <section className='robot-details'>
-            <section>
-                <h3>Model: {robot.model}</h3>
-            </section>
-            <section>
-                <h3>Type: {robot.type}</h3>
-            </section>
-            <section>
-                <h3>batteryStatus: {robot.batteryStatus}</h3>
-            </section>
-            <img src={`https://robohash.org/${robot._id}`} />
-            <button onClick={onBack}>Back</button>
-        </section>
-    )
+  if (!contact) return <div>Loading...</div>;
+  return (
+    <section className="contact-details">
+      <section>
+        <h3>Model: {contact.model}</h3>
+      </section>
+      <section>
+        <h3>Type: {contact.type}</h3>
+      </section>
+      <section>
+        <h3>batteryStatus: {contact.batteryStatus}</h3>
+      </section>
+      <img src={`https://robohash.org/${contact._id}`} />
+      <button onClick={onBack}>Back</button>
+    </section>
+  )
 }

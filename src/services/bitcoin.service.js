@@ -1,16 +1,10 @@
 export const contactService = {
-    getRate,
-    getMarketPrice,
-    getConfirmedTransactions
-}
+  getRate,
+  getMarketPrice,
+  getConfirmedTransactions,
+};
 
-function getRate(){
+function getRate() {}
+function getMarketPrice() {}
 
-}
-function getMarketPrice(){
-
-}
-
-function getConfirmedTransactions(){
-    
-}
+function getConfirmedTransactions() {}

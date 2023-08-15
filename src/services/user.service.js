@@ -1,11 +1,11 @@
 export const contactService = {
-    getUser,
-}
+  getUser,
+};
 
-function getUser(){
-    return {
-        name: 'Ochoa Hyde',
-        coins:100,
-        moves:[]
-    }
+function getUser() {
+  return {
+    name: "Ochoa Hyde",
+    coins: 100,
+    moves: [],
+  };
 }
