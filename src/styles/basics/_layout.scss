@@ -1,30 +1,109 @@
-.container {
-  max-width: $normal-breakpoint;
-  margin: 0 auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding: 20px;
-
-  @include for-mobile-layout {
-    max-width: initial;
+.main-layout {
+  display: grid;
+  grid-template-columns: $layoutPadding 1fr $layoutPadding;
+  &.app-container{
+    grid-template-rows: $headerHeight 1fr $footerHeight;
+    height: 100%;
   }
 
-  @include for-tablet-layout {
-    max-width: $mobile-breakpoint;
+  > * {
+      grid-column: 2;
   }
 
+  > *.full {
+      grid-column: 1 / -1;
+  }
+
+
+  @include for-narrow-layout {
+      @include layoutGTC($break-narrow);
+  }
+  
   @include for-normal-layout {
-    max-width: $tablet-breakpoint;
+      @include layoutGTC($break-normal);
   }
-
+  
   @include for-wide-layout {
-    max-width: $normal-breakpoint;
+      @include layoutGTC($break-wide);
   }
 }
+
+.contact-index{
+  display: grid;
+  grid-template-columns: 1fr 20px auto;
+  &.open-modal{
+    .index-container{
+      width: calc(50vw - $layoutPadding - 10px);
+  
+    }
+    .router-modal{
+      // position: absolute;
+      grid-column: 3;
+      opacity: 1;
+      width: calc(50vw - $layoutPadding - 20px);
+    }
+    // grid-template-columns: 1fr 1fr;
+
+  }
+  .index-container{
+    width: calc(100vw - $layoutPadding*2 - 20px);
+    transition: width .3s, opacity .3s;
+
+  }
+  .router-modal{
+    opacity: 0;
+    width: 0;
+    transition: width .3s, opacity .3s;
+  }
+  @include for-mobile-layout{
+    grid-template-columns: auto auto;
+    &.open-modal{
+      .index-container{
+        opacity: 0;
+        width: 0;
+    
+      }
+      .router-modal{
+       
+        opacity: 1;
+        height: 100vh;
+        width: calc(100vw - $layoutPadding*2);
+      }
+      // grid-template-columns: 1fr 1fr;
+  
+    }
+    // background-color: aliceblue;
+  }
+}
+
+// .container {
+//   max-width: $break-normal;
+//   margin: 0 auto;
+//   padding-left: 10px;
+//   padding-right: 10px;
+//   padding: 20px;
+
+//   @include for-mobile-layout {
+//     max-width: initial;
+//   }
+
+//   @include for-tablet-layout {
+//     max-width: $mobile-breakpoint;
+//   }
+
+//   @include for-normal-layout {
+//     max-width: $tablet-breakpoint;
+//   }
+
+//   @include for-wide-layout {
+//     max-width: $normal-breakpoint;
+//   }
+// }
 
 // GRIDS
 .simple-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  grid-gap: 10px;
+  // grid-auto-rows: 100px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  // grid-gap: 10px;
 }

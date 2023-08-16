@@ -1,7 +1,7 @@
 import React from "react";
 import { ContactPreview } from "./ContactPreview";
 
-export function ContactList({ contacts, onRemoveContact, onSelectContactId }) {
+export function ContactList({ contacts, onRemoveContact }) {
   return (
     <section className="contact-list simple-cards-grid">
       {contacts.map((contact) => (
@@ -9,7 +9,6 @@ export function ContactList({ contacts, onRemoveContact, onSelectContactId }) {
           onRemoveContact={onRemoveContact}
           key={contact._id}
           contact={contact}
-          onSelectContactId={onSelectContactId}
         />
       ))}
     </section>

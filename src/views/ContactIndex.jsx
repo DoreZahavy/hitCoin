@@ -3,10 +3,18 @@ import { contactService } from '../services/contact.service'
 import { ContactList } from '../cmps/ContactList'
 import { ContactFilter } from '../cmps/ContactFilter'
 import { Loader } from '../cmps/Loader'
+import { Link, Outlet,useParams } from 'react-router-dom'
 
 export function ContactIndex() {
   const [contacts, setContacts] = useState(null)
-  const [filterBy, setFilterBy] = useState({term: ''})
+  const [filterBy, setFilterBy] = useState({ term: '' })
+  const [modalClass, setModalClass] = useState('')
+  const params = useParams()
+  useEffect(() => {
+    console.log('hi');
+    if(params.id) setModalClass('open-modal')
+    else setModalClass('') 
+  }, [params.id])
 
   useEffect(() => {
     loadContacts()
@@ -20,8 +28,6 @@ export function ContactIndex() {
   function onChangeFilter(filterBy) {
     setFilterBy(filterBy)
   }
-
-
 
   async function onRemoveContact(contactId) {
     try {
@@ -37,12 +43,14 @@ export function ContactIndex() {
 
   if (!contacts) return <Loader /> //<div>Loading...</div>
   return (
-    <section className="contact-index">
-      <ContactFilter onChangeFilter={onChangeFilter} filterBy={filterBy} />
-      <ContactList
-        onRemoveContact={onRemoveContact}
-        contacts={contacts}
-      />
+    <section className={`contact-index ${modalClass}`}>
+      <section className="index-container">
+        <ContactFilter onChangeFilter={onChangeFilter} filterBy={filterBy} />
+        <ContactList onRemoveContact={onRemoveContact} contacts={contacts} />
+      </section>
+      <section className='router-modal'>
+        <Outlet />
+      </section>
     </section>
   )
 }

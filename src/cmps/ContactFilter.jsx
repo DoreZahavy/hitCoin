@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { svgService } from '../services/svg.service'
 
 export function ContactFilter(props) {
   const [filterBy, setFilterBy] = useState(props.filterBy)
@@ -27,17 +28,19 @@ export function ContactFilter(props) {
       [field]: value,
     }))
   }
-
+function getSearchSvg(){
+  svgService.getSvg('search')
+}
   const { term } = filterBy
   return (
     <form className="contact-filter">
-      <label htmlFor="term">Model</label>
+      <span>{svgService.getSvg('search')}</span>
       <input
         onChange={handleChange}
         value={term}
         type="text"
         name="term"
-        id="term"
+        placeholder='Search'
       />
     </form>
   )

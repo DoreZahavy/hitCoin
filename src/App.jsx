@@ -12,17 +12,17 @@ import '../src/styles/styles.scss'
 function App() {
   return (
     <Router>
-      <AppHeader />
-
-      <h1>Vite + React</h1>
-      <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/statistics" element={<StatisticsView />} />
-        <Route path="/contact" element={<ContactIndex />}>
-          <Route path="robot/edit/:id?" element={<ContactEdit />} />
-          <Route path="robot/:id?" element={<ContactDetails />} />
-        </Route>
-      </Routes>
+      <section className="main-layout">
+        <AppHeader />
+        <Routes>
+          <Route path="/" element={<HomeView />} />
+          <Route path="/statistics" element={<StatisticsView />} />
+          <Route path="/contact" element={<ContactIndex />}>
+            <Route path="edit/:id?" element={<ContactEdit />} />
+            <Route path=":id?" element={<ContactDetails />} />
+          </Route>
+        </Routes>
+      </section>
     </Router>
   )
 }

@@ -1,14 +1,25 @@
 // Colors
-$clr1: #e01e5a;
-$clr2: #293241;
-$clr3: #5c3fc5;
-$clr4: #696969;
-$clr5: #e6e9ec;
+$reactClr:#61DBFB;
+$bgClr:#111111;
+$bgClrSecondery:rgba(51,51,51,0.8);
+$hoverClr:#312f32;
+$txtClr:#f3f3f4;
+
 
 $navHeight: 65px;
+$headerHeight:160px;
+$btnSize:48px;
 
-// Breakpoints
-$mobile-breakpoint: 600px;
-$tablet-breakpoint: 768px;
-$normal-breakpoint: 900px;
-$wide-breakpoint: 1080px;
+// LAYOUT
+$layoutPadding: 40px;
+$footerHeight:150px;
+$headerHeight:50px;
+
+// LAYOUT BREAKPOINTS
+$break-narrow: 600px;
+$break-normal: 960px;
+$break-wide: 1360px;
+
+$padded-break-narrow: $break-narrow + $layoutPadding * 2;
+$padded-break-normal: $break-normal + $layoutPadding * 2;
+$padded-break-wide: $break-wide + $layoutPadding * 2;
