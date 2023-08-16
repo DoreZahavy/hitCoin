@@ -1,5 +1,5 @@
-import React from "react"
-import reactLogo from "../assets/svgs/react.svg"
+import React from 'react'
+import reactLogo from '../assets/svgs/react.svg'
 
 export function Loader() {
   return (

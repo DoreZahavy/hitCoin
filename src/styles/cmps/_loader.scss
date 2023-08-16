@@ -1,15 +1,14 @@
-
-.react-logo{
-    img{
-        animation: logo-spin infinite 10s linear;
-    }
+.react-logo {
+  img {
+    animation: logo-spin infinite 10s linear;
+  }
 }
 
 @keyframes logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}

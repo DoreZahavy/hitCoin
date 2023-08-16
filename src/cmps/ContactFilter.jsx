@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 export function ContactFilter(props) {
-  const [filterBy, setFilterBy] = useState(props.filterBy);
+  const [filterBy, setFilterBy] = useState(props.filterBy)
 
   useEffect(() => {
-    props.onChangeFilter(filterBy);
-  }, [filterBy]);
+    props.onChangeFilter(filterBy)
+  }, [filterBy])
 
   function handleChange({ target }) {
-    const field = target.name;
-    let value = target.value;
+    const field = target.name
+    let value = target.value
 
     switch (target.type) {
-      case "number":
-      case "range":
-        value = +value || "";
-        break;
-      case "checkbox":
-        value = target.checked;
+      case 'number':
+      case 'range':
+        value = +value || ''
+        break
+      case 'checkbox':
+        value = target.checked
       default:
-        break;
+        break
     }
 
     setFilterBy((prevFilterBy) => ({
       ...prevFilterBy,
       [field]: value,
-    }));
+    }))
   }
 
-  const { term } = filterBy;
+  const { term } = filterBy
   return (
     <form className="contact-filter">
       <label htmlFor="term">Model</label>
@@ -40,5 +40,5 @@ export function ContactFilter(props) {
         id="term"
       />
     </form>
-  );
+  )
 }

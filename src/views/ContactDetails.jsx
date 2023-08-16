@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { contactService } from "../services/contactService";
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { contactService } from '../services/contact.service'
+import { Loader } from '../cmps/Loader'
 
-export function ContactDetails({ contactId, onBack }) {
-  const [contact, setContact] = useState(null);
+export function ContactDetails() {
+  const [contact, setContact] = useState(contactService.getEmptyContact())
+
+const navigate = useNavigate()
+const params = useParams()
 
   useEffect(() => {
-    loadContact();
-  }, [])
-
+    loadContact()
+  }, [params.id])
   async function loadContact() {
-    const contact = await contactService.getById(contactId);
-    setContact(contact);
+    const contact = await contactService.getById(params.id)
+    setContact(contact)
   }
 
-  if (!contact) return <div>Loading...</div>;
+  if (!contact) return <Loader/>
   return (
     <section className="contact-details">
       <section>
@@ -26,7 +30,7 @@ export function ContactDetails({ contactId, onBack }) {
         <h3>batteryStatus: {contact.batteryStatus}</h3>
       </section>
       <img src={`https://robohash.org/${contact._id}`} />
-      <button onClick={onBack}>Back</button>
+      <button>Back</button>
     </section>
   )
 }

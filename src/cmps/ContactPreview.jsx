@@ -7,7 +7,7 @@ export function ContactPreview({
 }) {
   const contactStyle = {
     backgroundImage: `url(https://robohash.org/${contact._id})`,
-  }
+  };
 
   return (
     <article style={contactStyle} className="contact-preview">
@@ -19,5 +19,5 @@ export function ContactPreview({
         <button onClick={() => onRemoveContact(contact._id)}>X</button>
       </section>
     </article>
-  )
+  );
 }
