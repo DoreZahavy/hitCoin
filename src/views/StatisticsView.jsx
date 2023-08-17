@@ -12,6 +12,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  defaults,
 } from 'chart.js'
 
 ChartJS.register(
@@ -23,6 +24,7 @@ ChartJS.register(
   Tooltip,
   Legend
 )
+// ChartJS.legend.display = false;
 import { Loader } from '../cmps/Loader'
 export function StatisticsView() {
   const [chartsData, setChartsData] = useState(null)
@@ -33,38 +35,112 @@ export function StatisticsView() {
   }, [])
 
   useEffectUpdate(() => {
-    // getData()
     if (!data) return
-    console.log('data', data)
     const mappedData = data.map((d, idx) => {
       const dataMap = {
         labels: [],
-        datasets: [{ label: d.name, id: idx, data: [] }],
+        datasets: [
+          {
+            fill: false,
+            borderColor: '#61DBFB',
+            label: d.name,
+            id: idx,
+            data: [],
+          },
+        ],
       }
       d.values.forEach((t, idx) => {
         dataMap.labels.push(new Date(t.x * 1000).toLocaleDateString('en-CA'))
+        // dataMap.labels.push(new Date(t.x * 1000).getMonth())
         dataMap.datasets[0].data.push(t.y)
       })
-      console.log('')
       return dataMap
     })
-    console.log('mappedData', mappedData)
     setChartsData(mappedData)
   }, [data])
 
   const getData = async () => {
-    // const data = await bitcoinService.getMarketPrice()
     const data = await bitcoinService.getChartsData()
-    console.log('data', data)
     setData(data)
+  }
+  let prevMonth = ''
+  const options = {
+    plugins: {
+      legend: {
+        labels: {
+          boxHeight: 0,
+          color: '#fff',
+          font: {
+            size: 16,
+          },
+        },
+      },
+    },
+    responsive: true,
+    scales: {
+      x: {
+        border: {
+          // color:'#fff',
+          display: false,
+        },
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+        ticks: {
+          color: '#fff',
+          callback: function (value, index, ticks) {
+            const months = [
+              'Jan',
+              'Feb',
+              'Mar',
+              'Apr',
+              'May',
+              'Jun',
+              'Jul',
+              'Aug',
+              'Sep',
+              'Oct',
+              'Nov',
+              'Dec',
+            ]
+            const monthIdx = new Date(this.getLabelForValue(value)).getMonth()
+            if (prevMonth === months[monthIdx]) return null
+            prevMonth = months[monthIdx]
+            return months[monthIdx]
+          },
+        },
+      },
+      y: {
+        border: {
+          // color:'#fff',
+          display: false,
+        },
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+        ticks: {
+          color: '#fff',
+          callback: function (value, index, ticks) {
+            if (this.getLabelForValue(value).length >= 8)
+              return this.getLabelForValue(value).split(',')[0] + 'm'
+            if (this.getLabelForValue(value).length >= 4)
+              return this.getLabelForValue(value).split(',')[0] + 'k'
+            return this.getLabelForValue(value)
+          },
+        },
+      },
+    },
   }
 
   if (!chartsData) return <Loader />
   return (
     <section className="statistics-view">
-      {chartsData.map(chartData => {
-        return <Line data={chartData} />
+      {chartsData.map((chartData) => {
+        return <Line className='line-chart' data={chartData} options={options} />
       })}
     </section>
   )
 }
+//options={options}
