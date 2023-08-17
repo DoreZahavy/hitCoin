@@ -28,9 +28,7 @@ export function ContactFilter(props) {
       [field]: value,
     }))
   }
-function getSearchSvg(){
-  svgService.getSvg('search')
-}
+
   const { term } = filterBy
   return (
     <form className="contact-filter">

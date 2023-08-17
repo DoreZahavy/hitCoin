@@ -1,104 +1,107 @@
 .main-layout {
   display: grid;
   grid-template-columns: $layoutPadding 1fr $layoutPadding;
-  &.app-container{
-    grid-template-rows: $headerHeight 1fr $footerHeight;
-    height: 100%;
+  &.app-container {
+    // grid-template-rows: $headerHeight 1fr $footerHeight;
+    // height: 100%;
   }
 
   > * {
-      grid-column: 2;
+    grid-column: 2;
   }
 
   > *.full {
-      grid-column: 1 / -1;
+    grid-column: 1 / -1;
   }
-
 
   @include for-narrow-layout {
-      @include layoutGTC($break-narrow);
+    @include layoutGTC($break-narrow);
   }
-  
+
   @include for-normal-layout {
-      @include layoutGTC($break-normal);
+    @include layoutGTC($break-normal);
   }
-  
+
   @include for-wide-layout {
-      @include layoutGTC($break-wide);
+    @include layoutGTC($break-wide);
   }
 }
 
-.contact-index{
+.contact-index {
   display: grid;
-  grid-template-columns: 1fr 20px auto;
-  &.open-modal{
-    .index-container{
-      width: calc(50vw - $layoutPadding - 10px);
-  
-    }
-    .router-modal{
-      // position: absolute;
-      grid-column: 3;
-      opacity: 1;
-      width: calc(50vw - $layoutPadding - 20px);
-    }
-    // grid-template-columns: 1fr 1fr;
-
+  grid-template-columns: auto auto;
+  .index-container {
+    opacity: 1;
+    width: calc(100vw - $layoutPadding * 2);
+    transition:
+        width 0.3s,
+        opacity 0.3s;
   }
-  .index-container{
-    width: calc(100vw - $layoutPadding*2 - 20px);
-    transition: width .3s, opacity .3s;
-
-  }
-  .router-modal{
+  .router-modal {
     opacity: 0;
     width: 0;
-    transition: width .3s, opacity .3s;
+    transition:
+    width 0.3s,
+    opacity 0.3s;
+    // transition: width .3s, opacity .3s;
   }
-  @include for-mobile-layout{
-    grid-template-columns: auto auto;
-    &.open-modal{
-      .index-container{
-        opacity: 0;
-        width: 0;
-    
-      }
-      .router-modal{
-       
-        opacity: 1;
-        height: 100vh;
-        width: calc(100vw - $layoutPadding*2);
-      }
-      // grid-template-columns: 1fr 1fr;
-  
+  &.open-modal {
+    .index-container {
+      opacity: 0;
+      width: 0;
     }
-    // background-color: aliceblue;
+    .router-modal {
+      opacity: 1;
+      // height: 100vh;
+      width: calc(100vw - $layoutPadding * 2);
+    }
+  }
+
+  // //////
+
+  @include for-narrow-layout {
+    grid-template-columns: 1fr 20px auto;
+    .index-container {
+      grid-column: 1/2;
+      width: $break-narrow;
+     
+    }
+    .router-modal {
+      opacity: 0;
+      width: 0;
+     
+    }
+    &.open-modal {
+      .index-container {
+        opacity: 1;
+        width: calc($break-narrow/2 - 10px);
+      }
+      .router-modal {
+        grid-column: 3;
+        opacity: 1;
+        width: calc($break-narrow/2 - 20px);
+      }
+    }
+    
+  }
+  @include for-normal-layout {
+    .index-container {
+      width: calc($break-normal - 20px);
+    }
+    .router-modal {
+    }
+    &.open-modal {
+      .index-container {
+        width: calc($break-normal / 2 - 10px);
+      }
+      .router-modal {
+        width: calc($break-normal / 2 - 20px);
+      }
+    }
+   
   }
 }
 
-// .container {
-//   max-width: $break-normal;
-//   margin: 0 auto;
-//   padding-left: 10px;
-//   padding-right: 10px;
-//   padding: 20px;
-
-//   @include for-mobile-layout {
-//     max-width: initial;
-//   }
-
-//   @include for-tablet-layout {
-//     max-width: $mobile-breakpoint;
-//   }
-
-//   @include for-normal-layout {
-//     max-width: $tablet-breakpoint;
-//   }
-
-//   @include for-wide-layout {
-//     max-width: $normal-breakpoint;
-//   }
-// }
 
 // GRIDS
 .simple-cards-grid {

@@ -3,9 +3,9 @@
   height: 48px;
   display: flex;
   align-items: center;
-  margin-block: 24px;
+  // margin-block: 24px;
   border-radius: 2em;
-  width: 300px;
+  // width: 300px;
   span{
     opacity: .7;
     margin-inline-start: 18px;
@@ -27,5 +27,15 @@
       color: #fff;
     }
    
+  }
+  width: calc(50vw);
+  // text-align: center;
+  margin:24px auto;
+  @include for-narrow-layout{
+    width: calc($break-narrow/2 - 20px);
+    margin-inline: 0;
+  }
+  @include for-normal-layout{
+    width: calc($break-normal/2 - 20px);
   }
 }

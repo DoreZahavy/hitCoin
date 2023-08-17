@@ -5,7 +5,14 @@
         align-items: center;
         justify-content: space-between;
         .logo{
-
+            position: relative;
+            font-size: 34px;
+            img{
+                // position: absolute;
+                // left: 42px;
+                // top: 14px;
+                width: 20px;
+            }
         }
         .header-nav{
             display: grid;
