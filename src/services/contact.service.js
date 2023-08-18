@@ -1,4 +1,5 @@
 export const contactService = {
+  
   query,
   getContactById,
   deleteContact,

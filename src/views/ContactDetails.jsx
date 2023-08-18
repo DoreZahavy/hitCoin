@@ -6,6 +6,8 @@ import { TransferFund } from '../cmps/TransferFund'
 import { MoveList } from '../cmps/MoveList'
 import { svgService } from '../services/svg.service'
 import { userService } from '../services/user.service'
+import { showErrorMsg,showSuccessMsg } from '../services/event-bus.service'
+
 
 export function ContactDetails() {
   const [contact, setContact] = useState(null)
