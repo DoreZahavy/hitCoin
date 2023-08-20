@@ -30,49 +30,46 @@ export function Signup({ onSignup }) {
   }
 
   return (
-    <form onSubmit={(ev) => onSignup(ev,cred)}>
+    <form className="user-auth" onSubmit={(ev) => onSignup(ev, cred)}>
       <h1>Signup</h1>
-      <div className="input-container">
-        <span className="input-label">Email</span>
-        <input
-          onChange={handleChange}
-          value={cred.email}
-          type="text"
-          name="email"
-          placeholder="Email"
-        />
-      </div>
-      <div className="input-container">
-        <span className="input-label">Name</span>
-        <input
-          onChange={handleChange}
-          value={cred.name}
-          type="text"
-          name="name"
-          placeholder="Full name"
-        />
-      </div>
-      <div className="input-container">
-        <span className="input-label">Phone</span>
-        <input
-          onChange={handleChange}
-          value={cred.phone}
-          type="text"
-          name="phone"
-          placeholder="Phone"
-        />
-      </div>
-      <div className="input-container">
-        <span className="input-label">Password</span>
-        <input
-          onChange={handleChange}
-          value={cred.password}
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
-      </div>
-      <button  className="auth-btn">Continue</button>
+
+      <span className="input-label">Email</span>
+      <input
+        onChange={handleChange}
+        value={cred.email}
+        type="text"
+        name="email"
+        placeholder="Email"
+      />
+
+      <span className="input-label">Name</span>
+      <input
+        onChange={handleChange}
+        value={cred.name}
+        type="text"
+        name="name"
+        placeholder="Full name"
+      />
+
+      <span className="input-label">Phone</span>
+      <input
+        onChange={handleChange}
+        value={cred.phone}
+        type="text"
+        name="phone"
+        placeholder="Phone"
+      />
+
+      <span className="input-label">Password</span>
+      <input
+        onChange={handleChange}
+        value={cred.password}
+        type="password"
+        name="password"
+        placeholder="Password"
+      />
+
+      <button className="auth-btn">Continue</button>
     </form>
   )
 }

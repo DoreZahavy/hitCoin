@@ -25,9 +25,9 @@ export function Login({ onLogin }) {
   }
 
   return (
-    <form onSubmit={(ev) => onLogin(ev,cred)}>
+    <form className='user-auth' onSubmit={(ev) => onLogin(ev,cred)}>
       <h1>logIn</h1>
-      <div className="input-container">
+      
         <span className="input-label">Email</span>
         <input
           onChange={handleChange}
@@ -36,8 +36,8 @@ export function Login({ onLogin }) {
           name="email"
           placeholder="Email"
         />
-      </div>
-      <div className="input-container">
+      
+    
         <span className="input-label">Password</span>
         <input
           onChange={handleChange}
@@ -46,7 +46,7 @@ export function Login({ onLogin }) {
           name="password"
           placeholder="Password"
         />
-      </div>
+     
       <button className="auth-btn">Log in</button>
     </form>
   )

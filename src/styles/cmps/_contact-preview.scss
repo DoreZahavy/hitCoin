@@ -1,6 +1,19 @@
 .contact-preview{
   .contact-actions{
     opacity: 0;
+    button{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      font-size: 18px;
+      background-color: transparent;
+      border-style: none;
+      color: inherit;
+      &:hover{
+        background-color: gray;
+      }
+    }
 
   }
   &:hover{

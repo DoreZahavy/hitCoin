@@ -107,7 +107,6 @@ export async function addMove(move) {
     }
 }
 export async function signup(cred) {
-    console.log('11111111111signup store actions');
     try {
         const user = await userService.signup(cred)
         store.dispatch({ type: SET_USER, user})
@@ -119,6 +118,7 @@ export async function login(cred) {
     try {
         const user = await userService.login(cred)
         store.dispatch({ type: SET_USER, user})
+        return Promise.resolve()
     } catch (error) {
         console.log('error:', error)
     }

@@ -59,10 +59,13 @@ export function ContactAdd() {
   return (
     <section className="contact-add">
       {/* <div className='add-actions flex align-center space-between'> */}
+<div className='add-header flex align-center'>
 
       <Link onClick={()=>setModal('')} to="/contact">
         <span className="back-svg">{svgService.getSvg('back')}</span>
       </Link>
+      <span>Add contacts</span>
+</div>
       {/* <span>{svgService.getSvg('add')}</span>
       </div> */}
 

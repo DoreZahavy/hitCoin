@@ -10,11 +10,16 @@
     //   margin-block-start: 16px;
     //   margin-inline: 16px;
     // }
-    .back-svg{
+    .add-header{
+      margin-block-start: 8px;
+      margin-inline-start: 8px;
+      .back-svg{
         display: inline-block;
         // position: absolute;
         margin-left: 16px;
-        margin-top: 16px;
+        margin-right: 8px;
+        margin-top: 8px;
+      }
     }
     .add-contact-list{
         overflow-y: scroll;

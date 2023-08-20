@@ -13,9 +13,9 @@ export function AppHeader() {
 //   if(loggedinUser) navigate('/')
 // },[loggedinUser])
 
-  function startAsGuest() {
-    login({ email: 'guest@renovize.com', password: 'password1' })
-
+  async function startAsGuest() {
+    await login({ email: 'guest@renovize.com', password: 'password1' })
+    navigate('/')
   }
 
   const navBar = (
@@ -36,7 +36,7 @@ export function AppHeader() {
         {loggedinUser ? (
           navBar
         ) : (
-          <button onClick={startAsGuest}>Start as guest</button>
+          <button className='start-as-guest' onClick={startAsGuest}>Start as guest</button>
         )}
       </section>
     </section>

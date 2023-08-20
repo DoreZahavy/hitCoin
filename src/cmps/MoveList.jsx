@@ -6,9 +6,9 @@ export function MoveList({moves}) {
     <section className="move-list">
       {moves.map((move,idx)=>(
         <div className="move-preview" key={idx}>
-          <p>to {move.to}</p>
-          <p>at {move.at}</p>
-          <p>amount {move.amount}</p>
+          <p>To {move.to}</p>
+          <p>At {Date(move.at*1000).split(' ').slice(0,5).join(' ')}</p>
+          <p>{move.amount} Coins</p>
         </div>
       ))}
     </section>
