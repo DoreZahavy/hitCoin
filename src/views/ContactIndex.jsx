@@ -4,28 +4,38 @@ import { ContactList } from '../cmps/ContactList'
 import { ContactFilter } from '../cmps/ContactFilter'
 import { Loader } from '../cmps/Loader'
 import { useSelector } from 'react-redux'
-import { Link, Outlet,useParams } from 'react-router-dom'
-import { showErrorMsg,showSuccessMsg } from '../services/event-bus.service'
-
+import { Link, Outlet, useParams, useNavigate } from 'react-router-dom'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { svgService } from '../services/svg.service'
 
 export function ContactIndex() {
+  const navigate = useNavigate()
+
   // const [contacts, setContacts] = useState(null)
   const [filterBy, setFilterBy] = useState({ term: '' })
   const [modalClass, setModalClass] = useState('')
 
   const params = useParams()
-  const contacts = useSelector(state => state.userModule.loggedinUser.contacts)
+  // if(window.location.toString().includes("/contact/add")) setModalClass('open-modal')
+  // const contacts = useSelector(state => state.userModule.loggedinUser.contacts)
+  const loggedinUser = useSelector((state) => state.userModule.loggedinUser)
+  // if (!loggedinUser) navigate(`/userauth`)
+  
 
   useEffect(() => {
-    if(params.id) setModalClass('open-modal')
-    else setModalClass('') 
-  }, [params.id])
+    if(!loggedinUser) navigate(`/userauth`)
+  }, [])
+
+  useEffect(() => {
+    if (params.id || window.location.toString().includes("/contact/add")) setModalClass('open-modal')
+    else setModalClass('')
+  }, [params.id,window.location])
 
   function onChangeFilter(filterBy) {
     setFilterBy(filterBy)
   }
 
-  function filteredContacts(){
+  function filteredContacts() {
     const term = filterBy.term.toLocaleLowerCase()
     return contacts.filter((contact) => {
       return (
@@ -38,14 +48,16 @@ export function ContactIndex() {
 
   // const contactToDisplay = filteredContacts()
 
-  if (!contacts) return <Loader /> //<div>Loading...</div>
+  if (!loggedinUser) return <Loader /> //<div>Loading...</div>
+  const {contacts} = loggedinUser
   return (
     <section className={`contact-index ${modalClass}`}>
       <section className="index-container">
         <ContactFilter onChangeFilter={onChangeFilter} filterBy={filterBy} />
-        <ContactList  contacts={filteredContacts()} />
+        <Link className='add-link' to="/contact/add" onClick={()=>setModalClass('open-modal')}>{svgService.getSvg('add')}</Link>
+        <ContactList contacts={filteredContacts()} />
       </section>
-      <section className='router-modal'>
+      <section className="router-modal">
         <Outlet />
       </section>
     </section>

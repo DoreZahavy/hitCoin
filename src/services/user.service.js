@@ -1,3 +1,7 @@
+import {httpService} from './http.service'
+
+const STORAGE_KEY_LOGGEDIN_USER = 'loggedInUser'
+
 export const userService = {
   getLoggedinUser,
   signup,
@@ -15,7 +19,7 @@ async function query() {
 }
 
 function getLoggedinUser() {
-  // return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+  return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 
   return {
     _id: "5a56640269f443a5d64b32ca",
@@ -146,6 +150,8 @@ async function login({ email, password }) {
 }
 
 async function signup({ email, password, phone, name }) {
+  console.log('user user service');
+
   const user = await httpService.post(`auth/signup`, { email, password, phone, name })
   sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
   return user
@@ -193,7 +199,8 @@ function filter(term) {
 
 function getContactById(contactId) {
   const user = getLoggedinUser()
-  return user.contacts.find(c => c._id === contactId)
+  
+  return  user.contacts.find(c => +c.id === +contactId)
 
 }
 

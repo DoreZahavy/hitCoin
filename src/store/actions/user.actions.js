@@ -1,11 +1,13 @@
 import { store } from "../store";
-import {ADD_MOVE,REMOVE_CONTACT,ADD_CONTACT, REMOVE_USER,ADD_USER,UPDATE_USER, SET_FILTER_BY, SET_USERS } from "../reducers/user.reducer";
-import { userService } from "../../services/user.service";
+import {LOGOUT,SET_USER,ADD_MOVE,REMOVE_CONTACT,ADD_CONTACT, REMOVE_USER,ADD_USER,UPDATE_USER, SET_FILTER_BY, SET_USERS } from "../reducers/user.reducer";
+// import { userService } from "../../services/user.service";
+import { userService } from "../../services/user.service.local";
 
 export async function loadUsers() {
     try {
-        const filterBy = store.getState().userModule.filterBy
-        const users = await userService.query(filterBy)
+        // const filterBy = store.getState().userModule.filterBy
+        const users = await userService.query()
+        console.log('users:', users)
         const action = {
             type: SET_USERS,
             users
@@ -45,10 +47,10 @@ export async function addUser(user) {
 }
 export async function updateUser(user) {
     try {
-        await userService.updateUser(user)
+        const updatedUser = await userService.updateUser(user)
         const action = {
             type: UPDATE_USER,
-            user
+            updatedUser
         }
         store.dispatch(action)
     } catch (error) {
@@ -94,26 +96,27 @@ export async function addMove(move) {
         console.log('error:', error)
     }
 }
-export async function signup(move) {
+export async function signup(cred) {
+    console.log('11111111111signup store actions');
     try {
-        await userService.signup(move)
-        store.dispatch({ type: ADD_MOVE, move})
+        const user = await userService.signup(cred)
+        store.dispatch({ type: SET_USER, user})
     } catch (error) {
         console.log('error:', error)
     }
 }
 export async function login(cred) {
     try {
-        await userService.login(cred)
-        store.dispatch({ type: ADD_MOVE, move})
+        const user = await userService.login(cred)
+        store.dispatch({ type: SET_USER, user})
     } catch (error) {
         console.log('error:', error)
     }
 }
-export async function logout(cred) {
+export async function logout() {
     try {
-        await userService.logout(cred)
-        store.dispatch({ type: ADD_MOVE, move})
+        await userService.logout()
+        store.dispatch({ type: LOGOUT})
     } catch (error) {
         console.log('error:', error)
     }

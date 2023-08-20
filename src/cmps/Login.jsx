@@ -25,10 +25,10 @@ export function Login({ onLogin }) {
   }
 
   return (
-    <form v-else onSubmit={() => onLogin(cred)}>
+    <form onSubmit={(ev) => onLogin(ev,cred)}>
       <h1>logIn</h1>
-      <div class="input-container">
-        <span class="input-label">Email</span>
+      <div className="input-container">
+        <span className="input-label">Email</span>
         <input
           onChange={handleChange}
           type="text"
@@ -37,8 +37,8 @@ export function Login({ onLogin }) {
           placeholder="Email"
         />
       </div>
-      <div class="input-container">
-        <span class="input-label">Password</span>
+      <div className="input-container">
+        <span className="input-label">Password</span>
         <input
           onChange={handleChange}
           type="password"
@@ -47,7 +47,7 @@ export function Login({ onLogin }) {
           placeholder="Password"
         />
       </div>
-      <button class="auth-btn">Log in</button>
+      <button className="auth-btn">Log in</button>
     </form>
   )
 }

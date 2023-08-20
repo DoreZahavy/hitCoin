@@ -10,9 +10,9 @@ export function ContactPreview({
   // }
 
   return (
-    <Link replace to={`/contact/${contact._id}`} className="contact-preview">
+    <Link replace to={`/contact/${contact.id}`} className="contact-preview">
       {/* <section  className="contact-info"> */}
-        <img src={`https://robohash.org/${contact._id}`} alt="" />
+        <img src={`https://robohash.org/${contact.id}`} alt="" />
         <div>
         <h2>{contact.name}</h2>
         {/* <h4>{contact.email}</h4> */}

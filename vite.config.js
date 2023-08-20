@@ -5,4 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: "/hitCoin",
   plugins: [react()],
+  // build: {
+  //   outDir: '../backend/public',
+  //   emptyOutDir: true
+  // }
 })

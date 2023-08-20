@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { bitcoinService } from '../services/bitcoin.service'
 import { Line } from 'react-chartjs-2'
 import { useEffectUpdate } from '../customHooks/useEffectUpdate'
+import { Link, Outlet,useParams,useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import {
   Chart as ChartJS,
@@ -27,10 +29,16 @@ ChartJS.register(
 // ChartJS.legend.display = false;
 import { Loader } from '../cmps/Loader'
 export function StatisticsView() {
+  const navigate = useNavigate()
+
   const [chartsData, setChartsData] = useState(null)
   const [data, setData] = useState(null)
+  const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+
+  // if(!user) navigate(`/userauth`)
 
   useEffect(() => {
+    if(!loggedinUser) navigate(`/userauth`)
     getData()
   }, [])
 

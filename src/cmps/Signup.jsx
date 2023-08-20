@@ -30,10 +30,10 @@ export function Signup({ onSignup }) {
   }
 
   return (
-    <form onSubmit={() => onSignup(cred)}>
+    <form onSubmit={(ev) => onSignup(ev,cred)}>
       <h1>Signup</h1>
-      <div class="input-container">
-        <span class="input-label">Email</span>
+      <div className="input-container">
+        <span className="input-label">Email</span>
         <input
           onChange={handleChange}
           value={cred.email}
@@ -42,8 +42,8 @@ export function Signup({ onSignup }) {
           placeholder="Email"
         />
       </div>
-      <div class="input-container">
-        <span class="input-label">Name</span>
+      <div className="input-container">
+        <span className="input-label">Name</span>
         <input
           onChange={handleChange}
           value={cred.name}
@@ -52,8 +52,8 @@ export function Signup({ onSignup }) {
           placeholder="Full name"
         />
       </div>
-      <div class="input-container">
-        <span class="input-label">Phone</span>
+      <div className="input-container">
+        <span className="input-label">Phone</span>
         <input
           onChange={handleChange}
           value={cred.phone}
@@ -62,8 +62,8 @@ export function Signup({ onSignup }) {
           placeholder="Phone"
         />
       </div>
-      <div class="input-container">
-        <span class="input-label">Password</span>
+      <div className="input-container">
+        <span className="input-label">Password</span>
         <input
           onChange={handleChange}
           value={cred.password}
@@ -72,7 +72,7 @@ export function Signup({ onSignup }) {
           placeholder="Password"
         />
       </div>
-      <button class="auth-btn">Continue</button>
+      <button  className="auth-btn">Continue</button>
     </form>
   )
 }

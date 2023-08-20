@@ -31,6 +31,7 @@
   width: calc(50vw);
   // text-align: center;
   margin:24px auto;
+  
   @include for-narrow-layout{
     width: calc($break-narrow/2 - 20px);
     margin-inline: 0;

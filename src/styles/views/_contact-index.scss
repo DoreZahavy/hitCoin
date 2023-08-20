@@ -1,7 +1,15 @@
 .contact-index {
     padding-block-end: 24px;
     .index-container{
-      
+        position: relative;
+        // padding-block: 16px;
+      .add-link{
+        // display: inline-block;
+        // margin-block-end: 16px;
+        position: absolute;
+        top: 104px;
+        right: 16px;
+      }
     }
     .router-modal{
         border-radius: 2em;

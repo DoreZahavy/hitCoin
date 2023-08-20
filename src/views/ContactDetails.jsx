@@ -21,6 +21,8 @@ export function ContactDetails() {
 
   function loadContact() {
     const contact = userService.getContactById(params.id)
+    console.log("🚀 ~ file: ContactDetails.jsx:24 ~ loadContact ~ contact:", contact)
+    
     setContact(contact)
   }
 
@@ -31,11 +33,11 @@ export function ContactDetails() {
     <section className="contact-details">
       <div className="details-action">
         <Link to="/contact">
-          <span>{svgService.getSvg('times')}</span>
+          <span>{svgService.getSvg('back')}</span>
         </Link>
-        <Link to={`/contact/edit/${contact._id}`}>Edit</Link>
+        {/* <Link to={`/contact/edit/${contact.id}`}>Edit</Link> */}
       </div>
-      <img src={`https://robohash.org/${contact._id}`} />
+      <img src={`https://robohash.org/${contact.id}`} />
       <section>
         <h1>{contact.name}</h1>
       </section>

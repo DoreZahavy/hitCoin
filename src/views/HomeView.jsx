@@ -4,18 +4,28 @@ import { bitcoinService } from '../services/bitcoin.service'
 import { userService } from '../services/user.service'
 import { useState, useEffect } from 'react'
 import { MoveList } from '../cmps/MoveList'
+import { useSelector } from 'react-redux'
+import { Link, Outlet,useParams,useNavigate } from 'react-router-dom'
+import { logout } from '../store/actions/user.actions'
+
 
 export function HomeView() {
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
+  const navigate = useNavigate()
+
   const [bitcoinRate, setBitcoinRate] = useState(null)
+  const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+// if(!loggedinUser) navigate(`/userauth`)
+
 
   useEffect(() => {
-    loadUser()
+    if(!loggedinUser) navigate(`/userauth`)
+    // loadUser()
   }, [])
 
   useEffect(() => {
-    if (user) loadBitcoinRate()
-  }, [user])
+    if (loggedinUser) loadBitcoinRate()
+  }, [loggedinUser])
 
   async function loadUser() {
     const currUser = await userService.getLoggedinUser()
@@ -23,18 +33,21 @@ export function HomeView() {
   }
 
   async function loadBitcoinRate() {
-    const userBitcoinRate = await bitcoinService.getRate(user.coins)
+    const userBitcoinRate = await bitcoinService.getRate(loggedinUser.coins)
     setBitcoinRate(userBitcoinRate)
   }
 
-  if (!bitcoinRate || !user) return
+  if (!bitcoinRate || !loggedinUser) return
   return (
     <section className="home-view">
       <section>
-        <h1>Welcome {user.name}</h1>
-        <p>user coins: ${user.coins}</p>
+        <div className="">
+        <h1>Welcome {loggedinUser.name}</h1>
+        <span onClick={logout} className="logout-icon">logout</span>
+        </div>
+        <p>user coins: ${loggedinUser.coins}</p>
         <p>bitcoin rate for 1$: {bitcoinRate}</p>
-        <p>user bitcoin: {bitcoinRate * user.coins}</p>
+        <p>user bitcoin: {bitcoinRate * loggedinUser.coins}</p>
       </section>
       <section>
         <h4>your last 3 moves!</h4>

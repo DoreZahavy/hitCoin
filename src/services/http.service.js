@@ -1,9 +1,10 @@
 import Axios from 'axios'
 // import { router } from '@/router'
+// const csrfToken = _getCookie('csrftoken')
 
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
-    : '//localhost:3033/api/'
+    : '//localhost:8000/api/'
 
 const axios = Axios.create({
     withCredentials: true
@@ -25,11 +26,18 @@ export const httpService = {
 }
 
 function ajax(endpoint, method = 'GET', data = null) {
+    const csrfToken = _getCookie('csrftoken')
+    console.log("🚀 ~ file: http.service.js:30 ~ ajax ~ csrfToken:", csrfToken)
+    
     return axios({
         url: `${BASE_URL}${endpoint}`,
         method,
         data,
-        params: (method === 'GET') ? data : null
+        params: (method === 'GET') ? data : null,
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        },
     })
         .then(res => res.data)
         .catch(err => {
@@ -66,5 +74,13 @@ async function ajaxWithAsyncAwait(endpoint, method = 'GET', data = null) {
             // router.push('/login')
         }
         throw err
+    }
+}
+
+function _getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return parts.pop().split(';').shift();
     }
 }

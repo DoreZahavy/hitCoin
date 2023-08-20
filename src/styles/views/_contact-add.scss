@@ -1,0 +1,32 @@
+.contact-add{
+    display: grid;
+    grid-template-rows: auto 1fr;
+    // align-items: start;
+    max-height: calc(100vh - $headerHeight - 24px);
+    // overflow-y: scroll;
+    height: 100%;
+    padding-bottom: 16px;
+    .back-svg{
+        display: inline-block;
+        // position: absolute;
+        margin-left: 16px;
+        margin-top: 16px;
+    }
+    .add-contact-list{
+        overflow-y: scroll;
+        // align-self: flex-start;
+
+    }
+    .contact-filter{
+        justify-self: center;
+        // width: calc(50vw - 32px);
+//   margin-inline-start: 16px;
+  @include for-narrow-layout{
+    width: calc($break-narrow/2 - 20px - 32px);
+    margin-inline: 0;
+  }
+  @include for-normal-layout{
+    width: calc($break-normal/2 - 20px - 32px);
+  }
+    }
+}
