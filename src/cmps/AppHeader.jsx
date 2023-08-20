@@ -9,9 +9,9 @@ import { useEffectUpdate } from '../customHooks/useEffectUpdate'
 export function AppHeader() {
   const navigate = useNavigate()
   const loggedinUser = useSelector((state) => state.userModule.loggedinUser)
-useEffectUpdate(()=>{
-  if(loggedinUser) navigate('/')
-},[loggedinUser])
+// useEffectUpdate(()=>{
+//   if(loggedinUser) navigate('/')
+// },[loggedinUser])
 
   function startAsGuest() {
     login({ email: 'guest@renovize.com', password: 'password1' })

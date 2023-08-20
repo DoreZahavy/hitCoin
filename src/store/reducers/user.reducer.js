@@ -1,4 +1,4 @@
-import { userService } from "../../services/user.service"
+import { userService } from "../../services/user.service.local"
 
 export const SET_USERS = 'SET_USERS'
 export const SET_USER = 'SET_USER'
@@ -9,6 +9,7 @@ export const UPDATE_USER = 'UPDATE_USER'
 export const ADD_CONTACT = 'ADD_CONTACT'
 export const REMOVE_CONTACT = 'REMOVE_CONTACT'
 export const ADD_MOVE = 'ADD_MOVE'
+export const SET_MODAL = 'SET_MODAL'
 export const SET_FILTER_BY = 'SET_FILTER_BY'
 
 
@@ -16,6 +17,7 @@ export const SET_FILTER_BY = 'SET_FILTER_BY'
 const initialState = {
     loggedinUser: userService.getLoggedinUser(),
     users: null,
+    contactModal:'',
     filterBy: {
         term: ''
     }
@@ -28,6 +30,11 @@ export function userReducer(state = initialState, action = {}) {
             return {
                 ...state,
                 users: action.users
+            }
+        case SET_MODAL:
+            return {
+                ...state,
+                contactModal: action.modal
             }
         case SET_USER:
             return {

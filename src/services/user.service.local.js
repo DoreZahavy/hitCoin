@@ -1,5 +1,5 @@
 import { storageService } from './async-storage.service'
-import {utilService} from './util.service'
+import { utilService } from './util.service'
 
 
 const USER_KEY = 'userDB'
@@ -17,6 +17,8 @@ export const userService = {
   getUserById,
   getContactById,
   query,
+  addContact,
+  removeContact
 }
 
 async function query() {
@@ -51,7 +53,27 @@ async function logout() {
   sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 }
 async function addMove(move) {
+  const user = getLoggedinUser()
+  user.moves.push(move)
+  user.coins -= +move.amount
+  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 
+  return await save(user)
+}
+async function addContact(contact) {
+  const user = getLoggedinUser()
+  user.contacts.unshift(contact)
+  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+
+  return await save(user)
+}
+async function removeContact(contactId) {
+  const user = getLoggedinUser()
+  const idx = user.contacts.findIndex(c=>c.id===contactId)
+  user.contacts.splice(idx,1)
+  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+
+  return await save(user)
 }
 async function getUserById(userId) {
   return await storageService.get(USER_KEY, userId)
@@ -140,7 +162,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664020123456789abcdef",
+        id: "5a566402012345678dfgdef",
         name: "Olivia Reed",
         email: "oliviareed@renovize.com",
         phone: "+1 (345) 678-9012",
@@ -150,7 +172,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640234567890abcdef12",
+        id: "5a5664023456789djfjcdef12",
         name: "Isaac Patterson",
         email: "isaacpatterson@renovize.com",
         phone: "+1 (456) 789-0123",
@@ -160,7 +182,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640267890abcdef12345",
+        id: "5a56640267890sdgfdh12345",
         name: "Sophia Johnson",
         email: "sophiajohnson@renovize.com",
         phone: "+1 (567) 890-1234",
@@ -170,7 +192,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640290abcdef12345678",
+        id: "5a56640290vcnef12345678",
         name: "Aiden Green",
         email: "aidengreen@renovize.com",
         phone: "+1 (678) 901-2345",
@@ -180,7 +202,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abcdef1234567890",
+        id: "5a566402abcdefndf567890",
         name: "Ava Brown",
         email: "avabrown@renovize.com",
         phone: "+1 (789) 012-3456",
@@ -190,7 +212,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664021234567890abcdef",
+        id: "5a56640212345678snfnmbcdef",
         name: "Mason Jackson",
         email: "masonjackson@renovize.com",
         phone: "+1 (890) 123-4567",
@@ -200,7 +222,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abcdef1234567890",
+        id: "5a566402abcdef12sdh890",
         name: "Emma Martinez",
         email: "emmamartinez@renovize.com",
         phone: "+1 (901) 234-5678",
@@ -210,7 +232,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640290abcdef12345678",
+        id: "5a56640290abcdeffsdn678",
         name: "Noah Gray",
         email: "noahgray@renovize.com",
         phone: "+1 (012) 345-6789",
@@ -220,7 +242,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664021234567890abcdef",
+        id: "5a566402123456agdabcdef",
         name: "Liam Coleman",
         email: "liamcoleman@renovize.com",
         phone: "+1 (123) 456-7890",
@@ -230,7 +252,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abcdef1234567890",
+        id: "5a566402abcdqeg234567890",
         name: "Olivia Mitchell",
         email: "oliviamitchell@renovize.com",
         phone: "+1 (234) 567-8901",
@@ -240,7 +262,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640290abcdef12345678",
+        id: "5a566402sdhbcdef12345678",
         name: "Lucas Walker",
         email: "lucaswalker@renovize.com",
         phone: "+1 (345) 678-9012",
@@ -250,7 +272,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abcdef1234567890",
+        id: "5a566402asdhn1234567890",
         name: "Sophia Wright",
         email: "sophiawright@renovize.com",
         phone: "+1 (456) 789-0123",
@@ -260,7 +282,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640290abcdef12345678",
+        id: "5a56640290abcdm12345678",
         name: "Aiden Lewis",
         email: "aidenlewis@renovize.com",
         phone: "+1 (567) 890-1234",
@@ -270,7 +292,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abcdef1234567890",
+        id: "5a566402abcdefyju567890",
         name: "Emma Hall",
         email: "emmahall@renovize.com",
         phone: "+1 (678) 901-2345",
@@ -280,7 +302,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664021234567890abcdef",
+        id: "5a5664021234567dfhswbcdef",
         name: "Mason Young",
         email: "masonyoung@renovize.com",
         phone: "+1 (789) 012-3456",
@@ -290,7 +312,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abcdef1234567890",
+        id: "5a566402abcdef12fgk90",
         name: "Oliver King",
         email: "oliverking@renovize.com",
         phone: "+1 (890) 123-4567",
@@ -300,7 +322,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640290abcdef12345678",
+        id: "5a56640290abcdef12yl678",
         name: "Sophia Turner",
         email: "sophiaturner@renovize.com",
         phone: "+1 (901) 234-5678",
@@ -310,7 +332,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640269f443a5d64b32ca",
+        id: "5a56640269f443a5dffhl32ca",
         name: "Ochoa Hyde",
         email: "ochoahyde@renovize.com",
         phone: "+1 (968) 593-3824",
@@ -320,7 +342,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664025f6ae9aa24a99fde",
+        id: "5a5664025f6ae9aa24a9sfjyde",
         name: "Hallie Mclean",
         email: "halliemclean@renovize.com",
         phone: "+1 (948) 464-2888",
@@ -330,7 +352,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640252d6acddd183d319",
+        id: "5a56640252d6acdfj83d319",
         name: "Parsons Norris",
         email: "parsonsnorris@renovize.com",
         phone: "+1 (958) 502-3495",
@@ -340,7 +362,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402ed1cf349f0b47b4d",
+        id: "5a566402ed1cf3ujg0b47b4d",
         name: "Rachel Lowe",
         email: "rachellowe@renovize.com",
         phone: "+1 (911) 475-2312",
@@ -350,7 +372,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abce24c6bfe4699d",
+        id: "5a566402abce24c6bioj699d",
         name: "Dominique Soto",
         email: "dominiquesoto@renovize.com",
         phone: "+1 (807) 551-3258",
@@ -360,7 +382,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402a6499c1d4da9220a",
+        id: "5a566402a6499c1d4dvfbz0a",
         name: "Shana Pope",
         email: "shanapope@renovize.com",
         phone: "+1 (970) 527-3082",
@@ -370,7 +392,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402f90ae30e97f990db",
+        id: "5a566402f90ae3hgsdhdb",
         name: "Faulkner Flores",
         email: "faulknerflores@renovize.com",
         phone: "+1 (952) 501-2678",
@@ -380,7 +402,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664027bae84ef280ffbdf",
+        id: "5a5664027bae84efghjybdf",
         name: "Holder Bean",
         email: "holderbean@renovize.com",
         phone: "+1 (989) 503-2663",
@@ -390,7 +412,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402e3b846c5f6aec652",
+        id: "5a566402e3b846aedf6aec652",
         name: "Rosanne Shelton",
         email: "rosanneshelton@renovize.com",
         phone: "+1 (968) 454-3851",
@@ -400,7 +422,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640272c7dcdf59c3d411",
+        id: "5a56640272c7dbxc59c3d411",
         name: "Pamela Nolan",
         email: "pamelanolan@renovize.com",
         phone: "+1 (986) 545-2166",
@@ -410,7 +432,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664029a8dd82a6178b15f",
+        id: "5a5664029a8dd82ngfnc8b15f",
         name: "Roy Cantu",
         email: "roycantu@renovize.com",
         phone: "+1 (929) 571-2295",
@@ -420,7 +442,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664028c096d08eeb13a8a",
+        id: "5a5664028c096d0sdhb13a8a",
         name: "Ollie Christian",
         email: "olliechristian@renovize.com",
         phone: "+1 (977) 419-3550",
@@ -430,7 +452,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664026c53582bb9ebe9d1",
+        id: "5a5664026c5358fdgjje9d1",
         name: "Nguyen Walls",
         email: "nguyenwalls@renovize.com",
         phone: "+1 (963) 471-3181",
@@ -440,7 +462,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640298ab77236845b82b",
+        id: "5a56640298ab7723684gdfj2b",
         name: "Glenna Santana",
         email: "glennasantana@renovize.com",
         phone: "+1 (860) 467-2376",
@@ -450,7 +472,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640208fba3e8ecb97305",
+        id: "5a56640208fba3e8gfdnjh7305",
         name: "Malone Clark",
         email: "maloneclark@renovize.com",
         phone: "+1 (818) 565-2557",
@@ -460,7 +482,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a566402abb3146207bc4ec5",
+        id: "5a566402abb31fdhjc4ec5",
         name: "Floyd Rutledge",
         email: "floydrutledge@renovize.com",
         phone: "+1 (807) 597-3629",
@@ -470,7 +492,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640298500fead8cb1ee5",
+        id: "5a56640298500sdgtb1ee5",
         name: "Grace James",
         email: "gracejames@renovize.com",
         phone: "+1 (959) 525-2529",
@@ -480,7 +502,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a56640243427b8f8445231e",
+        id: "5a56640243427b8dgfje5231e",
         name: "Tanner Gates",
         email: "tannergates@renovize.com",
         phone: "+1 (978) 591-2291",
@@ -490,7 +512,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664025c3abdad6f5e098c",
+        id: "5a5664025c3abdad6yhjuk98c",
         name: "Lilly Conner",
         email: "lillyconner@renovize.com",
         phone: "+1 (842) 587-3812",
@@ -500,7 +522,7 @@ function _createUsers() {
         contacts: []
       },
       {
-        id: "5a5664025c3abdad6f5e098c",
+        id: "5a5664025c3abdaaswdc98c",
         name: "Guest",
         email: "guest@renovize.com",
         phone: "+1 (555) 555-5555",
@@ -518,7 +540,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a5664020123456789abcdef",
+          id: "5a566402012345678dfgdef",
           name: "Olivia Reed",
           email: "oliviareed@renovize.com",
           phone: "+1 (345) 678-9012",
@@ -528,7 +550,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640234567890abcdef12",
+          id: "5a5664023456789djfjcdef12",
           name: "Isaac Patterson",
           email: "isaacpatterson@renovize.com",
           phone: "+1 (456) 789-0123",
@@ -538,7 +560,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640267890abcdef12345",
+          id: "5a56640267890sdgfdh12345",
           name: "Sophia Johnson",
           email: "sophiajohnson@renovize.com",
           phone: "+1 (567) 890-1234",
@@ -548,7 +570,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640290abcdef12345678",
+          id: "5a56640290vcnef12345678",
           name: "Aiden Green",
           email: "aidengreen@renovize.com",
           phone: "+1 (678) 901-2345",
@@ -558,7 +580,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a566402abcdef1234567890",
+          id: "5a566402abcdefndf567890",
           name: "Ava Brown",
           email: "avabrown@renovize.com",
           phone: "+1 (789) 012-3456",
@@ -568,7 +590,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a5664021234567890abcdef",
+          id: "5a56640212345678snfnmbcdef",
           name: "Mason Jackson",
           email: "masonjackson@renovize.com",
           phone: "+1 (890) 123-4567",
@@ -578,7 +600,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a566402abcdef1234567890",
+          id: "5a566402abcdef12sdh890",
           name: "Emma Martinez",
           email: "emmamartinez@renovize.com",
           phone: "+1 (901) 234-5678",
@@ -588,7 +610,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640290abcdef12345678",
+          id: "5a56640290abcdeffsdn678",
           name: "Noah Gray",
           email: "noahgray@renovize.com",
           phone: "+1 (012) 345-6789",
@@ -598,7 +620,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a5664021234567890abcdef",
+          id: "5a566402123456agdabcdef",
           name: "Liam Coleman",
           email: "liamcoleman@renovize.com",
           phone: "+1 (123) 456-7890",
@@ -608,7 +630,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a566402abcdef1234567890",
+          id: "5a566402abcdqeg234567890",
           name: "Olivia Mitchell",
           email: "oliviamitchell@renovize.com",
           phone: "+1 (234) 567-8901",
@@ -618,7 +640,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640290abcdef12345678",
+          id: "5a566402sdhbcdef12345678",
           name: "Lucas Walker",
           email: "lucaswalker@renovize.com",
           phone: "+1 (345) 678-9012",
@@ -628,7 +650,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a566402abcdef1234567890",
+          id: "5a566402asdhn1234567890",
           name: "Sophia Wright",
           email: "sophiawright@renovize.com",
           phone: "+1 (456) 789-0123",
@@ -638,7 +660,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640290abcdef12345678",
+          id: "5a56640290abcdm12345678",
           name: "Aiden Lewis",
           email: "aidenlewis@renovize.com",
           phone: "+1 (567) 890-1234",
@@ -648,7 +670,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a566402abcdef1234567890",
+          id: "5a566402abcdefyju567890",
           name: "Emma Hall",
           email: "emmahall@renovize.com",
           phone: "+1 (678) 901-2345",
@@ -658,7 +680,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a5664021234567890abcdef",
+          id: "5a5664021234567dfhswbcdef",
           name: "Mason Young",
           email: "masonyoung@renovize.com",
           phone: "+1 (789) 012-3456",
@@ -668,7 +690,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a566402abcdef1234567890",
+          id: "5a566402abcdef12fgk90",
           name: "Oliver King",
           email: "oliverking@renovize.com",
           phone: "+1 (890) 123-4567",
@@ -678,7 +700,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640290abcdef12345678",
+          id: "5a56640290abcdef12yl678",
           name: "Sophia Turner",
           email: "sophiaturner@renovize.com",
           phone: "+1 (901) 234-5678",
@@ -688,7 +710,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640269f443a5d64b32ca",
+          id: "5a56640269f443a5dffhl32ca",
           name: "Ochoa Hyde",
           email: "ochoahyde@renovize.com",
           phone: "+1 (968) 593-3824",
@@ -698,7 +720,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a5664025f6ae9aa24a99fde",
+          id: "5a5664025f6ae9aa24a9sfjyde",
           name: "Hallie Mclean",
           email: "halliemclean@renovize.com",
           phone: "+1 (948) 464-2888",
@@ -708,7 +730,7 @@ function _createUsers() {
           contacts: []
         },
         {
-          id: "5a56640252d6acddd183d319",
+          id: "5a56640252d6acdfj83d319",
           name: "Parsons Norris",
           email: "parsonsnorris@renovize.com",
           phone: "+1 (958) 502-3495",
@@ -716,7 +738,67 @@ function _createUsers() {
           coins: 100,
           moves: [],
           contacts: []
-        },]
+        },
+        {
+          id: "5a566402ed1cf3ujg0b47b4d",
+          name: "Rachel Lowe",
+          email: "rachellowe@renovize.com",
+          phone: "+1 (911) 475-2312",
+          password: "password1",
+          coins: 100,
+          moves: [],
+          contacts: []
+        },
+        {
+          id: "5a566402abce24c6bioj699d",
+          name: "Dominique Soto",
+          email: "dominiquesoto@renovize.com",
+          phone: "+1 (807) 551-3258",
+          password: "password1",
+          coins: 100,
+          moves: [],
+          contacts: []
+        },
+        {
+          id: "5a566402a6499c1d4dvfbz0a",
+          name: "Shana Pope",
+          email: "shanapope@renovize.com",
+          phone: "+1 (970) 527-3082",
+          password: "password1",
+          coins: 100,
+          moves: [],
+          contacts: []
+        },
+        {
+          id: "5a566402f90ae3hgsdhdb",
+          name: "Faulkner Flores",
+          email: "faulknerflores@renovize.com",
+          phone: "+1 (952) 501-2678",
+          password: "password1",
+          coins: 100,
+          moves: [],
+          contacts: []
+        },
+        {
+          id: "5a5664027bae84efghjybdf",
+          name: "Holder Bean",
+          email: "holderbean@renovize.com",
+          phone: "+1 (989) 503-2663",
+          password: "password1",
+          coins: 100,
+          moves: [],
+          contacts: []
+        },
+        {
+          id: "5a566402e3b846aedf6aec652",
+          name: "Rosanne Shelton",
+          email: "rosanneshelton@renovize.com",
+          phone: "+1 (968) 454-3851",
+          password: "password1",
+          coins: 100,
+          moves: [],
+          contacts: []
+        }]
       }
     ]
     utilService.saveToStorage(USER_KEY, users)

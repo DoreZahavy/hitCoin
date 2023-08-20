@@ -37,6 +37,10 @@ export function HomeView() {
     setBitcoinRate(userBitcoinRate)
   }
 
+  function filteredMoves(){
+    return loggedinUser.moves.slice(0,3)
+  }
+
   if (!bitcoinRate || !loggedinUser) return
   return (
     <section className="home-view">
@@ -51,7 +55,7 @@ export function HomeView() {
       </section>
       <section>
         <h4>your last 3 moves!</h4>
-        <MoveList/>
+        <MoveList moves={filteredMoves()}/>
       </section>
     </section>
   )

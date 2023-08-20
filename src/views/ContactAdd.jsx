@@ -5,6 +5,7 @@ import { ContactFilter } from '../cmps/ContactFilter'
 import { Loader } from '../cmps/Loader'
 import { svgService } from '../services/svg.service'
 import { Link } from 'react-router-dom'
+import { addContact, setModal } from '../store/actions/user.actions'
 export function ContactAdd() {
   // const [contacts,setContacts] = useState([])
   const [filterBy, setFilterBy] = useState({ term: '' })
@@ -36,6 +37,11 @@ export function ContactAdd() {
     setFilterBy(filterBy)
   }
 
+  function onAddContact(ev,contact){
+    ev.preventDefault()
+    addContact(contact)
+  }
+
   function filterContacts() {
     return users.filter((u) => {
       return (
@@ -52,15 +58,19 @@ export function ContactAdd() {
   const contactsToDisplay = filterContacts()
   return (
     <section className="contact-add">
-      <Link to="/contact">
+      {/* <div className='add-actions flex align-center space-between'> */}
+
+      <Link onClick={()=>setModal('')} to="/contact">
         <span className="back-svg">{svgService.getSvg('back')}</span>
       </Link>
+      {/* <span>{svgService.getSvg('add')}</span>
+      </div> */}
 
       <ContactFilter onChangeFilter={onChangeFilter} filterBy={filterBy} />
       {/* <input type="text" name='txt' value={filterBy.txt} onChange={handleChange} placeholder='Look for contacts'/> */}
       <div className="add-contact-list">
         {contactsToDisplay.map((contact) => (
-          <ContactPreview key={contact.id} contact={contact} />
+          <ContactPreview callBack={onAddContact} key={contact.id} contact={contact} />
         ))}
       </div>
     </section>

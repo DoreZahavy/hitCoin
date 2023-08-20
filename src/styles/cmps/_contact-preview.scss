@@ -1,9 +1,24 @@
 .contact-preview{
+  .contact-actions{
+    opacity: 0;
+
+  }
+  &:hover{
+    .contact-actions{
+      opacity: 1;
+  
+    }
+  }
+  .contact-info{
+    display: flex;
+    align-items: center;
+  }
   // background-color: rgba(51,51,51,0.8);
   display: flex;
   // flex-direction: column;
   // justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   padding: 8px 16px;
   h2{

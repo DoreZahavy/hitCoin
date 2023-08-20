@@ -7,7 +7,7 @@ export function ContactList({ contacts, onRemoveContact }) {
       
       {contacts.map((contact) => (
         <ContactPreview
-          onRemoveContact={onRemoveContact}
+          callBack={onRemoveContact}
           key={contact.id}
           contact={contact}
         />

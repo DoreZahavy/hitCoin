@@ -200,7 +200,7 @@ function filter(term) {
 function getContactById(contactId) {
   const user = getLoggedinUser()
   
-  return  user.contacts.find(c => +c.id === +contactId)
+  return  user.contacts.find(c => c.id === contactId)
 
 }
 

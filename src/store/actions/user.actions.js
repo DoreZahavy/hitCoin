@@ -1,5 +1,5 @@
 import { store } from "../store";
-import {LOGOUT,SET_USER,ADD_MOVE,REMOVE_CONTACT,ADD_CONTACT, REMOVE_USER,ADD_USER,UPDATE_USER, SET_FILTER_BY, SET_USERS } from "../reducers/user.reducer";
+import {LOGOUT,SET_USER,ADD_MOVE,REMOVE_CONTACT,ADD_CONTACT, REMOVE_USER,ADD_USER,UPDATE_USER, SET_FILTER_BY, SET_USERS, SET_MODAL } from "../reducers/user.reducer";
 // import { userService } from "../../services/user.service";
 import { userService } from "../../services/user.service.local";
 
@@ -17,6 +17,14 @@ export async function loadUsers() {
         console.log('error:', error)
     }
 
+}
+
+export function setModal(modal){
+    const action = {
+        type: SET_MODAL,
+        modal
+    }
+    store.dispatch(action)
 }
 
 export async function removeUser(userId) {
@@ -60,9 +68,10 @@ export async function updateUser(user) {
 export async function addContact(contact) {
     try {
         const userId = store.getState().userModule.loggedinUser._id
-        await userService.addContact(userId,contact)
+        // await userService.addContact(userId,contact)
+        const user = await userService.addContact(contact)
         const action = {
-            type: ADD_CONTACT,
+            type: SET_USER,
             user
         }
         store.dispatch(action)
@@ -73,9 +82,10 @@ export async function addContact(contact) {
 export async function removeContact(contactId) {
     try {
         const userId = store.getState().userModule.loggedinUser._id
-        await userService.removeContact(userId,contactId)
+        // const user = await userService.removeContact(userId,contactId)
+        const user = await userService.removeContact(contactId)
         const action = {
-            type: REMOVE_CONTACT,
+            type: SET_USER,
             user
         }
         store.dispatch(action)
@@ -90,8 +100,8 @@ export async function setFilterBy(filterBy) {
 
 export async function addMove(move) {
     try {
-        await userService.addMove(move)
-        store.dispatch({ type: ADD_MOVE, move})
+        const user = await userService.addMove(move)
+        store.dispatch({ type: SET_USER, user})
     } catch (error) {
         console.log('error:', error)
     }

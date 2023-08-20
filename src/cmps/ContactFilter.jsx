@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { svgService } from '../services/svg.service'
+import { useForm } from '../customHooks/useForm'
 
 export function ContactFilter(props) {
   const [filterBy, setFilterBy] = useState(props.filterBy)
-
+// const [register] = useForm(props.filterBy,props.onChangeFilter)
   useEffect(() => {
     props.onChangeFilter(filterBy)
   }, [filterBy])
@@ -33,7 +34,7 @@ export function ContactFilter(props) {
   return (
     <form className="contact-filter">
       <span>{svgService.getSvg('search')}</span>
-      <input
+      <input 
         onChange={handleChange}
         value={term}
         type="text"

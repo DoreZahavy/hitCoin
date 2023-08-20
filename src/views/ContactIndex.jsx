@@ -7,18 +7,21 @@ import { useSelector } from 'react-redux'
 import { Link, Outlet, useParams, useNavigate } from 'react-router-dom'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
+import { removeContact, setModal } from '../store/actions/user.actions'
 
 export function ContactIndex() {
   const navigate = useNavigate()
 
   // const [contacts, setContacts] = useState(null)
   const [filterBy, setFilterBy] = useState({ term: '' })
-  const [modalClass, setModalClass] = useState('')
+  // const [modalClass, setModalClass] = useState('')
 
   const params = useParams()
   // if(window.location.toString().includes("/contact/add")) setModalClass('open-modal')
   // const contacts = useSelector(state => state.userModule.loggedinUser.contacts)
   const loggedinUser = useSelector((state) => state.userModule.loggedinUser)
+  const contactModal = useSelector((state) => state.userModule.contactModal)
+
   // if (!loggedinUser) navigate(`/userauth`)
   
 
@@ -27,8 +30,10 @@ export function ContactIndex() {
   }, [])
 
   useEffect(() => {
-    if (params.id || window.location.toString().includes("/contact/add")) setModalClass('open-modal')
-    else setModalClass('')
+    console.log('hi');
+    if (params.id || window.location.toString().includes("/contact/add")) setModal('open-modal')
+    else if( !params.id && !window.location.toString().includes("/contact/add")) setModal('')
+    else setModal('')
   }, [params.id,window.location])
 
   function onChangeFilter(filterBy) {
@@ -46,16 +51,21 @@ export function ContactIndex() {
     })
   }
 
+  function onRemoveContact(ev,contactId){
+    ev.preventDefault()
+    removeContact(contactId)
+  }
+
   // const contactToDisplay = filteredContacts()
 
   if (!loggedinUser) return <Loader /> //<div>Loading...</div>
   const {contacts} = loggedinUser
   return (
-    <section className={`contact-index ${modalClass}`}>
+    <section className={`contact-index ${contactModal}`}>
       <section className="index-container">
         <ContactFilter onChangeFilter={onChangeFilter} filterBy={filterBy} />
-        <Link className='add-link' to="/contact/add" onClick={()=>setModalClass('open-modal')}>{svgService.getSvg('add')}</Link>
-        <ContactList contacts={filteredContacts()} />
+        <Link className='add-link' to="/contact/add" onClick={()=>setModal('open-modal')}>{svgService.getSvg('add')}</Link>
+        <ContactList onRemoveContact={onRemoveContact} contacts={filteredContacts()} />
       </section>
       <section className="router-modal">
         <Outlet />
