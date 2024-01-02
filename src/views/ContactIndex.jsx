@@ -56,7 +56,7 @@ export function ContactIndex() {
 
   function onRemoveContact(ev, contactId) {
     ev.preventDefault()
-    removeContact(contactId)
+    removeContact(loggedinUser.id,contactId)
   }
 
   // const contactToDisplay = filteredContacts()

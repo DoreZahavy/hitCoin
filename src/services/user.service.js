@@ -205,10 +205,11 @@ async function getContactById(userId,contactId) {
   return await httpService.get(`contact/${userId}/${contactId}`)
 }
 async function removeContact(userId,contactId) {
-  return await httpService.del(`contact/${userId}/${contactId}`)
+  console.log(`contact/${userId}/${contactId}`);
+  return await httpService.delete(`contact/${userId}/${contactId}`)
 }
 async function addContact(userId,contactId) {
-  return await httpService.del(`contact/${userId}/${contactId}`)
+  return await httpService.post(`contact/${userId}/${contactId}/`)
 }
 
 

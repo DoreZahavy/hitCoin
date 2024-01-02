@@ -20,7 +20,7 @@ var link = callBack.toString().includes('onRemove')
         {callBack.toString().includes('onRemove') ? (
           <button onClick={(ev) => callBack(ev,contact.id)}>X</button>
         ) : (
-          <button onClick={(ev) => callBack(ev,contact)}>+</button>
+          <button onClick={(ev) => callBack(ev,contact.id)}>+</button>
         )}
         {/* <button onClick={() => callBack(contact.id)}>X</button> */}
       </section>

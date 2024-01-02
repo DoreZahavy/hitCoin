@@ -65,9 +65,9 @@ export async function updateUser(user) {
         console.log('error:', error)   
     }
 }
-export async function addContact(contactId) {
+export async function addContact(userId,contactId) {
     try {
-        const userId = store.getState().userModule.loggedinUser._id
+        // const userId = store.getState().userModule.loggedinUser._id
         // await userService.addContact(userId,contact)
         const contact = await userService.addContact(userId ,contactId)
         const action = {
@@ -79,11 +79,13 @@ export async function addContact(contactId) {
         console.log('error:', error)   
     }
 }
-export async function removeContact(contactId) {
+export async function removeContact(userId,contactId) {
     try {
         // const userId = store.getState().userModule.loggedinUser._id
         // const user = await userService.removeContact(userId,contactId)
-        await userService.removeContact(contactId)
+        console.log('userId',userId);
+        console.log('test');
+        await userService.removeContact(userId,contactId)
         const action = {
             type: REMOVE_CONTACT,
             contactId

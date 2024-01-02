@@ -37,9 +37,9 @@ export function ContactAdd() {
     setFilterBy(filterBy)
   }
 
-  function onAddContact(ev,contact){
+  function onAddContact(ev,contactId){
     ev.preventDefault()
-    addContact(contact)
+    addContact(loggedinUser.id, contactId)
   }
 
   function filterContacts() {
