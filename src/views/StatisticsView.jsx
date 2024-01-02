@@ -38,7 +38,7 @@ export function StatisticsView() {
   // if(!user) navigate(`/userauth`)
 
   useEffect(() => {
-    if(!loggedinUser) navigate(`/userauth`)
+    // if(!loggedinUser) navigate(`/userauth`)
     getData()
   }, [])
 

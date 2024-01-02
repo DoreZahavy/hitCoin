@@ -10,7 +10,7 @@ export function TransferFund({contact,coins,onAddMove}) {
 
   function readyMove(){
    
-    onAddMove(contact.name,amount)
+    onAddMove(contact.id,amount)
   }
   return (
     <section className="transfer-fund">

@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { MoveList } from '../cmps/MoveList'
 import { useSelector } from 'react-redux'
 import { Link, Outlet, useParams, useNavigate } from 'react-router-dom'
-import { logout } from '../store/actions/user.actions'
+import { loadContacts, logout, queryMoves } from '../store/actions/user.actions'
 import { svgService } from '../services/svg.service'
 
 export function HomeView() {
@@ -15,10 +15,12 @@ export function HomeView() {
 
   const [bitcoinRate, setBitcoinRate] = useState(null)
   const loggedinUser = useSelector((state) => state.userModule.loggedinUser)
+  const moves = useSelector((state) => state.userModule.moves)
   // if(!loggedinUser) navigate(`/userauth`)
 
   useEffect(() => {
-    if (!loggedinUser) navigate(`/userauth`)
+    queryMoves(loggedinUser.id)
+    // if (!loggedinUser) navigate(`/userauth`)
     // loadUser()
   }, [])
 
@@ -26,18 +28,19 @@ export function HomeView() {
     if (loggedinUser) loadBitcoinRate()
   }, [loggedinUser])
 
-  async function loadUser() {
-    const currUser = await userService.getLoggedinUser()
-    setUser(currUser)
-  }
+  // async function loadUser() {
+  //   const currUser = await userService.getLoggedinUser()
+  //   setUser(currUser)
+  // }
 
   async function loadBitcoinRate() {
     const userBitcoinRate = await bitcoinService.getRate(loggedinUser.coins)
     setBitcoinRate(userBitcoinRate)
   }
 
-  function filteredMoves() {
-    return loggedinUser.moves.slice(0, 3)
+  async function filteredMoves() {
+    // return loggedinUser.moves.slice(0, 3)
+    // return await userService.queryMoves(loggedinUser.id).slice(0, 3)
   }
 
   if (!bitcoinRate || !loggedinUser) return
@@ -50,13 +53,18 @@ export function HomeView() {
             {svgService.getSvg('logout')}
           </span>
         </div>
-        <p>Your coins → ${loggedinUser.coins}</p>
-        <p>Bitcoin rate/$ → {bitcoinRate}</p>
-        <p>your Bitcoin → {bitcoinRate * loggedinUser.coins}</p>
+        <div className='user-data'>
+          <p>Current Balance</p>
+          <p> ${loggedinUser.coins}</p>
+          <p>USD / Bitcoin Rate</p>
+          <p>{bitcoinRate}</p>
+          <p>your Bitcoin </p>
+          <p> {(bitcoinRate * loggedinUser.coins).toFixed(8)}</p>
+        </div>
       </section>
-      <section>
-        <h4>your last 3 moves!</h4>
-        <MoveList moves={filteredMoves()} />
+      <section className="last-moves flex column align-center">
+        <h4>Last Moves</h4>
+        <MoveList moves={moves} loggedinUserId={loggedinUser.id} />
       </section>
     </section>
   )

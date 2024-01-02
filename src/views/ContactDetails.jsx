@@ -8,39 +8,45 @@ import { svgService } from '../services/svg.service'
 import { userService } from '../services/user.service'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { useSelector } from 'react-redux'
-import { addContact, addMove, setModal } from '../store/actions/user.actions'
+import { addContact, addMove, loadContact, setModal } from '../store/actions/user.actions'
+import { useEffectUpdate } from '../customHooks/useEffectUpdate'
 export function ContactDetails() {
-  const [contact, setContact] = useState(null)
+  // const [contact, setContact] = useState(null)
   const loggedinUser = useSelector((state) => state.userModule.loggedinUser)
+  const contact = useSelector((state) => state.userModule.contactDetails)
 
   // const navigate = useNavigate()
   const params = useParams()
 
-  useEffect(() => {
-    loadContact()
+  useEffectUpdate(() => {
+    if(!params.id) return 
+    loadContact(loggedinUser.id,params.id)
   }, [params.id])
 
-  function loadContact() {
-    const contact = userService.getContactById(params.id)
+  useEffectUpdate(()=>{
+    console.log('contact: ',contact);
+  },[contact])
 
-    setContact(contact)
-  }
+  // function loadContact() {
+  //   const contact = userService.getContactById(params.id)
 
-  function onAddMove(to, amount) {
+  //   setContact(contact)
+  // }
+
+  function onAddMove(to, coins) {
     const move = {
       to,
-      amount,
-      from: loggedinUser.name,
-      at: Date.now(),
+      coins,
+      from: loggedinUser.id,
     }
     addMove(move)
   }
 
   
 
-  function filteredMoves() {
-    return loggedinUser.moves.filter((move) => move.to === contact.name)
-  }
+  // function filteredMoves() {
+  //   return loggedinUser.moves.filter((move) => move.to === contact.name)
+  // }
 
   if (!contact) return <Loader />
   return (
@@ -68,7 +74,7 @@ export function ContactDetails() {
         coins={loggedinUser.coins}
         onAddMove={onAddMove}
       />
-      <MoveList moves={filteredMoves()} />
+      <MoveList moves={contact.moves} />
     </section>
   )
 }

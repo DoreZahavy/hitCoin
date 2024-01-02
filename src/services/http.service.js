@@ -26,6 +26,7 @@ export const httpService = {
 }
 
 function ajax(endpoint, method = 'GET', data = null) {
+    console.log("🚀 ~ file: http.service.js:29 ~ ajax ~ data:", data)
     const csrfToken = _getCookie('csrftoken')
     console.log("🚀 ~ file: http.service.js:30 ~ ajax ~ csrfToken:", csrfToken)
     

@@ -1,6 +1,11 @@
 .home-view{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     // text-align: center;
     .welcome{
+        margin-block-end: 1.5em;
+        margin-block-start: 3.5em;
 
         h1{
             font-weight: 700;
@@ -8,10 +13,10 @@
             margin-block-end: 16px;
         }
         span{
-            opacity: 0;
+            opacity: 1;
             cursor: pointer;
             margin-inline-start: 16px;
-            transform: translate(0,4px);
+            transform: translate(6px,-3px);
         }
         &:hover{
             span{
@@ -26,5 +31,13 @@
         margin-block-start: 16px;
         font-size: em(18px,16px);
         font-weight: 600;
+    }
+    .user-data{
+        display: grid;
+        gap: 1em;
+        grid-template-columns: 1fr 1fr;
+        p{
+            // margin-block-end: 1em;
+        }
     }
 }

@@ -9,6 +9,9 @@ export const UPDATE_USER = 'UPDATE_USER'
 export const ADD_CONTACT = 'ADD_CONTACT'
 export const REMOVE_CONTACT = 'REMOVE_CONTACT'
 export const ADD_MOVE = 'ADD_MOVE'
+export const SET_CONTACT = 'SET_CONTACT'
+export const SET_CONTACTS = 'SET_CONTACTS'
+export const SET_MOVES = 'SET_MOVES'
 export const SET_MODAL = 'SET_MODAL'
 export const SET_FILTER_BY = 'SET_FILTER_BY'
 
@@ -17,6 +20,9 @@ export const SET_FILTER_BY = 'SET_FILTER_BY'
 const initialState = {
     loggedinUser: userService.getLoggedinUser(),
     users: null,
+    contacts: null,
+    moves:[],
+    contactDetails:null,
     contactModal:'',
     filterBy: {
         term: ''
@@ -31,6 +37,11 @@ export function userReducer(state = initialState, action = {}) {
                 ...state,
                 users: action.users
             }
+        case SET_CONTACTS:
+            return {
+                ...state,
+                contacts: action.contacts
+            }
         case SET_MODAL:
             return {
                 ...state,
@@ -40,6 +51,11 @@ export function userReducer(state = initialState, action = {}) {
             return {
                 ...state,
                 loggedinUser: action.user
+            }
+        case SET_CONTACT:
+            return {
+                ...state,
+                contactDetails: action.contact
             }
         case LOGOUT:
             return {
@@ -67,11 +83,11 @@ export function userReducer(state = initialState, action = {}) {
                 filterBy: { ...action.filterBy }
             }
         case ADD_CONTACT:
-            let loggedinUser = { ...state.loggedinUser, contacts: [...state.loggedinUser.contacts, action.contact] }
+            let loggedinUser = { ...state.loggedinUser, contacts: [...state.loggedinUser.contacts, action.contact.id] }
             return {
                 ...state,
                 loggedinUser,
-                users: state.users.map(user => user._id === loggedinUser._id ? loggedinUser : user)
+                contacts: [...state.contacts,action.contact]
 
             }
         case REMOVE_CONTACT:
@@ -79,22 +95,24 @@ export function userReducer(state = initialState, action = {}) {
             return {
                 ...state,
                 loggedinUser,
-                users: state.users.map(user => user._id === loggedinUser._id ? loggedinUser : user)
+                contacts: state.contacts.filter(contact => contact._id !== action.contactId)
+            }
+        case SET_MOVES:
+            return {
+                ...state,
+                moves:action.moves,
 
             }
         case ADD_MOVE:
-             loggedinUser = { ...state.loggedinUser, coins: state.loggedinUser.coins - action.move.amount, moves: [...state.loggedinUser.moves, action.move] }
-            const recipient = {...state.users.find(u => u._id === action.move.amount)}
-           
+            //  loggedinUser = { ...state.loggedinUser, coins: state.loggedinUser.coins - action.move.amount, moves: [...state.loggedinUser.moves, action.move] }
+            // const recipient = {...state.users.find(u => u._id === action.move.amount)}
+        //    let moves = moves
+        //    if(moves.length===3) moves = [action.move,moves[0],moves[1]]
             return {
                 ...state,
-                loggedinUser,
-                users: state.users.map(user => {
-                    if (user._id === loggedinUser._id) return loggedinUser
-                    if (user._id === recipient._id) return {...recipient, coins: recipient.coins-action.move.amount, moves: [...recipient.moves, action.move]}
-                    return user
-                })
-
+                moves:[...state.moves,action.move]
+                // loggedinUser:{...loggedinUser,moves:[action.move,...loggedinUser.moves],coins:(loggedinUser.coins-action.move.coins)},
+                // contactDetails:{...contactDetails,moves:[action.move,...contactDetails.moves],coins:(contactDetails.coins+action.move.coins)}
             }
 
         default:

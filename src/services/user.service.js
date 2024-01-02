@@ -3,15 +3,19 @@ import {httpService} from './http.service'
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedInUser'
 
 export const userService = {
-  getLoggedinUser,
   signup,
   logout,
   login,
+  query,
+  getUserById,
+  getLoggedinUser,
   getEmptyCredentials,
   addMove,
-  getUserById,
+  queryMoves,
+  queryContact,
   getContactById,
-  query,
+  removeContact,
+  addContact
 }
 
 async function query() {
@@ -150,7 +154,6 @@ async function login({ email, password }) {
 }
 
 async function signup({ email, password, phone, name }) {
-  console.log('user user service');
 
   const user = await httpService.post(`auth/signup`, { email, password, phone, name })
   sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
@@ -163,7 +166,10 @@ async function logout() {
   sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 }
 async function addMove(move) {
-
+  await httpService.post(`move`, move)
+}
+async function queryMoves(userId) {
+  return await httpService.get(`move/${userId}`)
 }
 async function getUserById(userId) {
   const user = await httpService.get(`user/` + userId)
@@ -178,13 +184,7 @@ function getEmptyCredentials() {
   }
 }
 
-function getEmptyContact() {
-  return {
-    name: "",
-    email: "",
-    phone: "",
-  }
-}
+
 
 function filter(term) {
   term = term.toLocaleLowerCase()
@@ -197,11 +197,18 @@ function filter(term) {
   })
 }
 
-function getContactById(contactId) {
-  const user = getLoggedinUser()
-  
-  return  user.contacts.find(c => c.id === contactId)
-
+async function queryContact(userId) {
+  console.log('user service', userId);
+  return await httpService.get(`contact/${userId}`)
+}
+async function getContactById(userId,contactId) {
+  return await httpService.get(`contact/${userId}/${contactId}`)
+}
+async function removeContact(userId,contactId) {
+  return await httpService.del(`contact/${userId}/${contactId}`)
+}
+async function addContact(userId,contactId) {
+  return await httpService.del(`contact/${userId}/${contactId}`)
 }
 
 

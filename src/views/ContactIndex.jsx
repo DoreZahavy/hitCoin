@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { contactService } from '../services/contact.service'
+// import { contactService } from '../services/contact.service'
 import { ContactList } from '../cmps/ContactList'
 import { ContactFilter } from '../cmps/ContactFilter'
 import { Loader } from '../cmps/Loader'
@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { Link, Outlet, useParams, useNavigate } from 'react-router-dom'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
-import { removeContact, setModal } from '../store/actions/user.actions'
+import { loadContacts, removeContact, setModal } from '../store/actions/user.actions'
 
 export function ContactIndex() {
   const navigate = useNavigate()
@@ -21,20 +21,23 @@ export function ContactIndex() {
   // const contacts = useSelector(state => state.userModule.loggedinUser.contacts)
   const loggedinUser = useSelector((state) => state.userModule.loggedinUser)
   const contactModal = useSelector((state) => state.userModule.contactModal)
+  const contacts = useSelector((state) => state.userModule.contacts)
 
   // if (!loggedinUser) navigate(`/userauth`)
-  
 
   useEffect(() => {
-    if(!loggedinUser) navigate(`/userauth`)
+    // if (!loggedinUser) navigate(`/userauth`)
+    loadContacts(loggedinUser.id)
   }, [])
 
   useEffect(() => {
-    console.log('hi');
-    if (params.id || window.location.toString().includes("/contact/add")) setModal('open-modal')
-    else if( !params.id && !window.location.toString().includes("/contact/add")) setModal('')
+    console.log('hi')
+    if (params.id || window.location.toString().includes('/contact/add'))
+      setModal('open-modal')
+    else if (!params.id && !window.location.toString().includes('/contact/add'))
+      setModal('')
     else setModal('')
-  }, [params.id,window.location])
+  }, [params.id, window.location])
 
   function onChangeFilter(filterBy) {
     setFilterBy(filterBy)
@@ -51,21 +54,30 @@ export function ContactIndex() {
     })
   }
 
-  function onRemoveContact(ev,contactId){
+  function onRemoveContact(ev, contactId) {
     ev.preventDefault()
     removeContact(contactId)
   }
 
   // const contactToDisplay = filteredContacts()
 
-  if (!loggedinUser) return <Loader /> //<div>Loading...</div>
-  const {contacts} = loggedinUser
+  if (!contacts) return <Loader /> //<div>Loading...</div>
+  // const { contacts } = loggedinUser
   return (
     <section className={`contact-index ${contactModal}`}>
       <section className="index-container">
         <ContactFilter onChangeFilter={onChangeFilter} filterBy={filterBy} />
-        <Link className='add-link' to="/contact/add" onClick={()=>setModal('open-modal')}>{svgService.getSvg('add')}</Link>
-        <ContactList onRemoveContact={onRemoveContact} contacts={filteredContacts()} />
+        <Link
+          className="add-link"
+          to="/contact/add"
+          onClick={() => setModal('open-modal')}
+        >
+          {svgService.getSvg('add')}
+        </Link>
+        <ContactList
+          onRemoveContact={onRemoveContact}
+          contacts={filteredContacts()}
+        />
       </section>
       <section className="router-modal">
         <Outlet />

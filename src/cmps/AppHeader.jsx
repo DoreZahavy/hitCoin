@@ -29,9 +29,9 @@ export function AppHeader() {
     <section className="app-header full main-layout">
       <section className="header-container">
         <div className="logo react-logo">
-          hitC
-          <img src={reactLogo} />
-          in
+          hitCoin
+          {/* <img src={reactLogo} />
+          in */}
         </div>
         {loggedinUser ? (
           navBar
