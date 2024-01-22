@@ -102,8 +102,8 @@ export async function setFilterBy(filterBy) {
 
 export async function addMove(move) {
     try {
-        const move = await userService.addMove(move)
-        store.dispatch({ type: ADD_MOVE, move})
+        const addedMove = await userService.addMove(move)
+        store.dispatch({ type: ADD_MOVE, addedMove})
     } catch (error) {
         console.log('error:', error)
     }

@@ -10,6 +10,7 @@ export function ContactList({ contacts, onRemoveContact }) {
           callBack={onRemoveContact}
           key={contact.id}
           contact={contact}
+          add={false}
         />
       ))}
     </section>

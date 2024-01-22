@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export function ContactPreview({ contact, callBack }) {
+export function ContactPreview({ contact, callBack ,add}) {
   // const contactStyle = {
   //   backgroundImage: `url(https://robohash.org/${contact._id})`,
   // }
-var link = callBack.toString().includes('onRemove') 
+var link = !add 
 ?contact.id:'add'
   return (
     <Link replace to={`/contact/${link}`} className="contact-preview">
@@ -17,11 +17,13 @@ var link = callBack.toString().includes('onRemove')
         </div>
       </section>
       <section className="contact-actions">
-        {callBack.toString().includes('onRemove') ? (
+
+        <button onClick={(ev) => callBack(ev,contact.id)}>{add?'+':'X'}</button>
+        {/* {callBack.toString().includes('onRemove') ? (
           <button onClick={(ev) => callBack(ev,contact.id)}>X</button>
         ) : (
           <button onClick={(ev) => callBack(ev,contact.id)}>+</button>
-        )}
+        )} */}
         {/* <button onClick={() => callBack(contact.id)}>X</button> */}
       </section>
     </Link>

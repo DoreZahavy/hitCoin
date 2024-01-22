@@ -166,7 +166,7 @@ async function logout() {
   sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 }
 async function addMove(move) {
-  await httpService.post(`move`, move)
+  await httpService.post(`move/`, move)
 }
 async function queryMoves(userId) {
   return await httpService.get(`move/${userId}`)

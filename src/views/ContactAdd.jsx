@@ -45,7 +45,7 @@ export function ContactAdd() {
   function filterContacts() {
     return users.filter((u) => {
       return (
-        !loggedinUser.contacts.some((secondC) => secondC.id === u.id) &&
+        loggedinUser.contacts.every((secondC) => secondC !== u.id) &&
         u.id !== loggedinUser.id &&
         (u.name.toLocaleLowerCase().includes(filterBy.term) ||
           u.phone.toLocaleLowerCase().includes(filterBy.term) ||
@@ -73,7 +73,7 @@ export function ContactAdd() {
       {/* <input type="text" name='txt' value={filterBy.txt} onChange={handleChange} placeholder='Look for contacts'/> */}
       <div className="add-contact-list">
         {contactsToDisplay.map((contact) => (
-          <ContactPreview callBack={onAddContact} key={contact.id} contact={contact} />
+          <ContactPreview add={true} callBack={onAddContact} key={contact.id} contact={contact} />
         ))}
       </div>
     </section>
